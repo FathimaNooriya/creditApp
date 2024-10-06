@@ -18,6 +18,7 @@ class MyColors {
   static const Color iconColor = Color.fromARGB(255, 255, 255, 255);
   static const Color bottonColor = Color.fromARGB(255, 68, 66, 66);
   static const Color unselectedColor = Color.fromARGB(132, 134, 119, 119);
+  static const Color borderColor = Color.fromARGB(172, 116, 34, 98);
 
   // Light Theme Colors
   static const Color backgroundLightColor = Color.fromARGB(255, 255, 255, 255);
