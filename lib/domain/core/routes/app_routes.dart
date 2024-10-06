@@ -14,7 +14,7 @@ class AppRoutes {
 
   static List<GetPage> pages = [
     GetPage(name: bottomNav, page: () => BottomNavScreen()),
-    GetPage(name: home, page: () => const HomeScreen()),
+    GetPage(name: home, page: () => HomeScreen()),
     GetPage(name: creditors, page: () => const CreditorsScreen()),
     GetPage(name: reports, page: () => const ReportsScreeen()),
     GetPage(name: transactions, page: () => const TransactionsScreen()),
