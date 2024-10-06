@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "208323944916",
+    "project_id": "credit-app-3f90a",
+    "storage_bucket": "credit-app-3f90a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208323944916:android:c297c070b4d71ce3e93641",
+        "android_client_info": {
+          "package_name": "com.example.moderncreditapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4UYscM449f8Bp7c-RShZIJ5ta6HYeGCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208323944916:android:c7cc7806774641bbe93641",
+        "android_client_info": {
+          "package_name": "com.example.testcredit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4UYscM449f8Bp7c-RShZIJ5ta6HYeGCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
