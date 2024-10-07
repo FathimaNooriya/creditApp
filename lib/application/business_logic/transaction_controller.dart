@@ -12,6 +12,19 @@ class TransactionController extends GetxController {
   final RxString transactionType = 'credit'.obs;
   final HomeController homeController = Get.put(HomeController());
   final creditDetailController = Get.put(CreditorDetailsController());
+  RxList<TransactionModel> allTransactionList = <TransactionModel>[].obs;
+
+  @override
+  void onInit() {
+    fetchAllTransaction();
+    super.onInit();
+  }
+
+  Future<void> fetchAllTransaction() async {
+    allTransactionList.clear();
+    allTransactionList.value =
+        await FirestoreDataSource().fetchAllTransactions();
+  }
 
   // Add transaction function
   Future<void> addTransaction(String creditorId) async {

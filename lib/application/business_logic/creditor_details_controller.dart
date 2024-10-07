@@ -16,13 +16,6 @@ class CreditorDetailsController extends GetxController {
   var transactions = <TransactionModel>[].obs;
   var isLoading = true.obs;
 
-  // @override
-  // void onInit() {
-  //   fetchCreditorDetails();
-  //   fetchTransactions();
-  //   super.onInit();
-  // }
-
   void fetchCreditorDetails({required String creditorId}) async {
     isLoading.value = true;
     creditor.value = await FirestoreDataSource().getCreditorById(creditorId);

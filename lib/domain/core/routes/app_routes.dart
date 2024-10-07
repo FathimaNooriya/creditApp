@@ -17,6 +17,6 @@ class AppRoutes {
     GetPage(name: home, page: () => HomeScreen()),
     GetPage(name: creditors, page: () => CreditorsScreen()),
     GetPage(name: reports, page: () => const ReportsScreeen()),
-    GetPage(name: transactions, page: () => const TransactionsScreen()),
+    GetPage(name: transactions, page: () => TransactionsScreen()),
   ];
 }
