@@ -4,8 +4,7 @@ import '../../domain/model/creditor/creditor_model.dart';
 import '../../domain/model/transaction/transaction_model.dart';
 
 class CreditorDetailsController extends GetxController {
-  final String creditorId;
-  CreditorDetailsController({required this.creditorId});
+  CreditorDetailsController();
 
   var creditor = CreditorModel(
           id: '',
@@ -17,20 +16,21 @@ class CreditorDetailsController extends GetxController {
   var transactions = <TransactionModel>[].obs;
   var isLoading = true.obs;
 
-  @override
-  void onInit() {
-    fetchCreditorDetails();
-    fetchTransactions();
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   fetchCreditorDetails();
+  //   fetchTransactions();
+  //   super.onInit();
+  // }
 
-  void fetchCreditorDetails() async {
+  void fetchCreditorDetails({required String creditorId}) async {
     isLoading.value = true;
     creditor.value = await FirestoreDataSource().getCreditorById(creditorId);
     isLoading.value = false;
   }
 
-  void fetchTransactions() async {
+  void fetchTransactions({required String creditorId}) async {
+    transactions.clear();
     transactions.value =
         await FirestoreDataSource().getTransactionsByCreditorId(creditorId);
   }

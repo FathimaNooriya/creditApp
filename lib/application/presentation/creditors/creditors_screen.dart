@@ -9,6 +9,8 @@ import 'creditor_details_page.dart';
 class CreditorsScreen extends StatelessWidget {
   CreditorsScreen({super.key});
   final HomeController homeController = Get.put(HomeController());
+  final CreditorDetailsController creditController =
+      Get.put(CreditorDetailsController());
   @override
   Widget build(BuildContext context) {
     //   double height = MediaQuery.of(context).size.height;
@@ -30,12 +32,11 @@ class CreditorsScreen extends StatelessWidget {
                 return CustomListTileDecoration(
                   listTile: ListTile(
                     onTap: () {
-                      final CreditorDetailsController controller = Get.put(
-                          CreditorDetailsController(creditorId: creditor.id));
-                      controller.fetchTransactions();
-                      Get.to(CreditorDetailsPage(
-                        creditor: creditor,
-                      ));
+                      creditController.fetchTransactions(
+                          creditorId: creditor.id);
+                      creditController.fetchCreditorDetails(
+                          creditorId: creditor.id);
+                      Get.to(CreditorDetailsPage());
                       // Get.to(CreditorDetailsPage(
                       //   creditorId: creditor.id,
                       // ));

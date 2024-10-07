@@ -35,6 +35,19 @@ class FirestoreDataSource {
     }
   }
 
+  Future<void> updateCreditorOutsnding(
+      {required String creditorId, required double amount}) async {
+    final data = CreditorEntity(totalOutstandingCredit: amount).toJson();
+    data.removeWhere((key, value) => value == null);
+    try {
+      await firestore.collection('creditors').doc(creditorId).update(data);
+      print("Amount updated successfully");
+    } catch (e) {
+      print("Failed to update amount: $e");
+      rethrow;
+    }
+  }
+
   Future<void> updateCreditor({required CreditorModel creditor}) async {
     print(creditor.id);
     try {
