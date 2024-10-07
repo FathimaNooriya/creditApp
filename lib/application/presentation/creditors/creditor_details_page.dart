@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../domain/model/creditor/creditor_model.dart';
 import '../../business_logic/creditor_details_controller.dart';
 import '../../business_logic/home_controller.dart';
 import '../widget/custom_listtile_decoration.dart';

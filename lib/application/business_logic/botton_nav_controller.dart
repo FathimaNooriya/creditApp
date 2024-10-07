@@ -10,7 +10,7 @@ class BottonNavController extends GetxController {
   final List<Widget> screens = [
     HomeScreen(),
     CreditorsScreen(),
-    const TransactionsScreen(),
+    TransactionsScreen(),
     const ReportsScreeen(),
   ];
 

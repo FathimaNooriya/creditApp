@@ -103,20 +103,17 @@ class FirestoreDataSource {
     }
   }
 
-  // Future<List<TransactionModel>> fetchTransactions(String creditorId) async {
-  //   try {
-  //     final snapshot = await firestore
-  //         .collection('transactions')
-  //         .where('creditorId', isEqualTo: creditorId)
-  //         .get();
-  //     return snapshot.docs
-  //         .map((doc) => TransactionModel.fromJson(doc as Map<String, dynamic>))
-  //         .toList();
-  //   } catch (e) {
-  //     print("Failed to fetch transactions: $e");
-  //     rethrow;
-  //   }
-  // }
+  Future<List<TransactionModel>> fetchAllTransactions() async {
+    try {
+      final snapshot = await firestore.collection('transactions').get();
+      return snapshot.docs
+          .map((doc) => TransactionModel.fromJson(doc.data()))
+          .toList();
+    } catch (e) {
+      print("Failed to fetch transactions: $e");
+      rethrow;
+    }
+  }
 
   Future<CreditorModel> getCreditorById(String creditorId) async {
     final doc = await firestore.collection('creditors').doc(creditorId).get();
