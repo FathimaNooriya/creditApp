@@ -6,7 +6,7 @@ import '../presentation/reports/reports_screeen.dart';
 import '../presentation/transactions/transactions_screen.dart';
 
 class BottonNavController extends GetxController {
-  var selectedBottomNavIndex = 1.obs;
+  var selectedBottomNavIndex = 0.obs;
   final List<Widget> screens = [
     HomeScreen(),
     CreditorsScreen(),
