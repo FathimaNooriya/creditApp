@@ -59,6 +59,7 @@ class TransactionController extends GetxController {
       creditDetailController.fetchTransactions(creditorId: creditorId);
       creditDetailController.fetchCreditorDetails(creditorId: creditorId);
       homeController.getCredtList();
+      fetchAllTransaction();
     } catch (e) {
       print('Failed to add transaction: $e');
     }
