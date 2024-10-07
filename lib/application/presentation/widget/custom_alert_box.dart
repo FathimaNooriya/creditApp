@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../domain/core/theme/colors.dart';
-import '../../../business_logic/home_controller.dart';
+import 'package:get/get.dart';
+import '../../../domain/core/theme/colors.dart';
+import '../../business_logic/home_controller.dart';
 import 'custom_textField.dart';
 
 class CustomAlertBox extends StatelessWidget {
@@ -46,12 +47,25 @@ class CustomAlertBox extends StatelessWidget {
                 ),
               ),
             ),
-            const Text("Enter the amound"),
-            CustomTextFeild(
-              controller: homeController.amountController,
-              label: "Credit Amount",
-              textInputType: TextInputType.number,
-            ),
+            Obx(() {
+              return homeController.isEdit.value
+                  ? Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 5),
+                    child: Text(
+                        "Total Outstanding Credit =${homeController.amountController.text}"),
+                  )
+                  : Column(
+                      children: [
+                        const Text("Enter the amound"),
+                        CustomTextFeild(
+                          controller: homeController.amountController,
+                          label: "Credit Amount",
+                          textInputType: TextInputType.number,
+                        ),
+                      ],
+                    );
+            }),
           ],
         ),
       ),
@@ -65,7 +79,7 @@ class CustomAlertBox extends StatelessWidget {
       actions: [
         ElevatedButton(
             onPressed: () {
-              homeController.addcreditorFunction();
+              homeController.addCreditorFunction();
             },
             child: const Text("Save"))
       ],

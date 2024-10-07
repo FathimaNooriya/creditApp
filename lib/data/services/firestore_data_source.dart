@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/model/creditor/creditor_model.dart';
+import '../../domain/model/transaction/transaction_model.dart';
 import '../entities/creditor_entity.dart';
 
 class FirestoreDataSource {
@@ -22,12 +23,26 @@ class FirestoreDataSource {
     }
   }
 
-  Future<void> updateCreditor({required String creditorId}) async {
+  Future<void> updateCreditorId({required String creditorId}) async {
     final data = CreditorEntity(id: creditorId).toJson();
     data.removeWhere((key, value) => value == null);
     try {
       await firestore.collection('creditors').doc(creditorId).update(data);
       print("Creditor updated successfully");
+    } catch (e) {
+      print("Failed to update creditor: $e");
+      rethrow;
+    }
+  }
+
+  Future<void> updateCreditor({required CreditorModel creditor}) async {
+    print(creditor.id);
+    try {
+      await firestore
+          .collection('creditors')
+          .doc(creditor.id)
+          .update(creditor.toJson());
+      print("Creditor .......updated ........successfully");
     } catch (e) {
       print("Failed to update creditor: $e");
       rethrow;
@@ -54,5 +69,56 @@ class FirestoreDataSource {
       print("Failed to fetch creditors: $e");
       rethrow;
     }
+  }
+
+  Future<void> addTransaction(TransactionModel transaction) async {
+    try {
+      // Add the transaction to Firestore and get the DocumentReference
+      DocumentReference docRef =
+          await firestore.collection('transactions').add(transaction.toJson());
+
+      // Get the generated transaction ID
+      String transactionId = docRef.id;
+      print("Transaction added successfully with ID: $transactionId");
+
+      // Update the transaction with the generated ID
+      await docRef.update({'transactionId': transactionId});
+      print("Transaction ID updated successfully");
+    } catch (e) {
+      print("Failed to add or update transaction: $e");
+      rethrow;
+    }
+  }
+
+  // Future<List<TransactionModel>> fetchTransactions(String creditorId) async {
+  //   try {
+  //     final snapshot = await firestore
+  //         .collection('transactions')
+  //         .where('creditorId', isEqualTo: creditorId)
+  //         .get();
+  //     return snapshot.docs
+  //         .map((doc) => TransactionModel.fromJson(doc as Map<String, dynamic>))
+  //         .toList();
+  //   } catch (e) {
+  //     print("Failed to fetch transactions: $e");
+  //     rethrow;
+  //   }
+  // }
+
+  Future<CreditorModel> getCreditorById(String creditorId) async {
+    final doc = await firestore.collection('creditors').doc(creditorId).get();
+    return CreditorModel.fromJson(doc.data() as Map<String, dynamic>);
+  }
+
+  Future<List<TransactionModel>> getTransactionsByCreditorId(
+      String creditorId) async {
+    final snapshot = await firestore
+        .collection('transactions')
+        .where('creditorId', isEqualTo: creditorId)
+        .get();
+
+    return snapshot.docs
+        .map((doc) => TransactionModel.fromJson(doc.data()))
+        .toList();
   }
 }

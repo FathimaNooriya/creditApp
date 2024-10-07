@@ -9,7 +9,7 @@ class BottonNavController extends GetxController {
   var selectedBottomNavIndex = 1.obs;
   final List<Widget> screens = [
     HomeScreen(),
-    const CreditorsScreen(),
+    CreditorsScreen(),
     const TransactionsScreen(),
     const ReportsScreeen(),
   ];

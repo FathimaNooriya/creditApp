@@ -5,6 +5,9 @@ import 'package:moderncreditapp/domain/core/theme/colors.dart';
 ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
 
+listTileTheme: ListTileThemeData(
+  
+),
   // Text theme applied to the body text
   textTheme: const TextTheme().apply(bodyColor: MyColors.iconColor),
 
