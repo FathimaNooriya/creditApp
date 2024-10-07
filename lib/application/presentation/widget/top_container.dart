@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../domain/core/theme/colors.dart';
+import '../../../domain/core/theme/colors.dart';
 
 class TopContainer extends StatelessWidget {
   const TopContainer({

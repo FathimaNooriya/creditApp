@@ -11,6 +11,8 @@ class HomeController extends GetxController {
   final addCreditorFormkey = GlobalKey<FormState>();
   RxList<CreditorModel> creditorsList = <CreditorModel>[].obs;
   RxDouble totalOutstandingCredit = 0.0.obs;
+  RxBool isEdit = false.obs;
+  String creditorId = "";
 
   @override
   void onInit() {
@@ -19,6 +21,7 @@ class HomeController extends GetxController {
   }
 
   getCredtList() async {
+    creditorsList.clear();
     creditorsList.value = await FirestoreDataSource().fetchCreditors();
     totalOutstandingCredit.value = 0.0;
     for (int i = 0; i < creditorsList.length; i++) {
@@ -27,28 +30,70 @@ class HomeController extends GetxController {
     }
   }
 
-  addcreditorFunction() async {
+  editCreditorFunction({required String id}) async {
+    creditorId = "";
+    try {
+      // Find the creditor by ID using firstWhereOrNull
+      CreditorModel? creditor = creditorsList.firstWhereOrNull(
+        (creditor) => creditor.id == id,
+      );
+
+      if (creditor != null) {
+        creditorId = id;
+        nameController.text = creditor.name;
+        phoneNumberController.text = creditor.phoneNumber.toString();
+        amountController.text = creditor.totalOutstandingCredit.toString();
+        addressController.text = creditor.address;
+      } else {
+        print('Creditor not found');
+      }
+    } catch (e) {
+      print('Error during edit: $e');
+    }
+  }
+
+  addCreditorFunction() async {
     bool validate = addCreditorFormkey.currentState!.validate();
     if (validate) {
-      CreditorModel creditor = CreditorModel(
-          id: "id",
-          name: nameController.text,
-          phoneNumber: int.parse(phoneNumberController.text),
-          address: addressController.text,
-          totalOutstandingCredit: double.parse(amountController.text));
-      String creditorId =
-          await FirestoreDataSource().addCreditor(creditor: creditor);
+      if (isEdit.value) {
+        CreditorModel creditor = CreditorModel(
+            id: creditorId,
+            name: nameController.text,
+            phoneNumber: int.parse(phoneNumberController.text),
+            address: addressController.text,
+            totalOutstandingCredit: double.parse(amountController.text));
 
-      // Now you can update the creditor in Firestore if needed
-      await FirestoreDataSource().updateCreditor(creditorId: creditorId);
-      print("...........succes......");
-      print("Creditor added and updated successfully");
+        await FirestoreDataSource().updateCreditor(creditor: creditor);
+        print("...........succes......");
+        print("Creditor updated successfully");
+        isEdit.value = false;
+      } else {
+        CreditorModel creditor = CreditorModel(
+            id: "id",
+            name: nameController.text,
+            phoneNumber: int.parse(phoneNumberController.text),
+            address: addressController.text,
+            totalOutstandingCredit: double.parse(amountController.text));
+
+        String creditorId =
+            await FirestoreDataSource().addCreditor(creditor: creditor);
+
+        // Now you can update the creditor in Firestore if needed
+        await FirestoreDataSource().updateCreditorId(creditorId: creditorId);
+        print("...........succes......");
+        print("Creditor added and updated successfully");
+      }
     } else {
       return;
     }
     getCredtList();
     Get.back();
     clearFields();
+  }
+
+  deleteCreditFunction({required String id}) {
+    FirestoreDataSource().deleteCreditor(id);
+    getCredtList();
   }
 
   // Clear form fields

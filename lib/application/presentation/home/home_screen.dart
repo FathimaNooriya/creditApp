@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../domain/core/theme/colors.dart';
 import '../../business_logic/home_controller.dart';
-import 'widget/custom_alert_box.dart';
-import 'widget/top_container.dart';
+import '../widget/custom_alert_box.dart';
+import '../widget/custom_listtile_decoration.dart';
+import '../widget/top_container.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -22,12 +23,13 @@ class HomeScreen extends StatelessWidget {
             Obx(() => Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    homeController.creditorsList.length == 0
+                    homeController.creditorsList.isEmpty
                         ? const CircularProgressIndicator()
                         : TopContainer(
                             height: height,
                             tittle: "Creditors",
-                            value: homeController.creditorsList.length + 1,
+                            value:
+                                homeController.creditorsList.length.toDouble(),
                           ),
                     TopContainer(
                       height: height,
@@ -54,20 +56,11 @@ class HomeScreen extends StatelessWidget {
                 //controller.creditors.length,
                 itemBuilder: (context, index) {
                   //  final creditor = controller.creditors[index];
-                  return Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: MyColors.borderColor,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const ListTile(
-                          title: Text("Creditor Name"),
-                          subtitle: Text('Transaction Type'),
-                          trailing: Text("Amound")),
-                    ),
+                  return const CustomListTileDecoration(
+                    listTile: ListTile(
+                        title: Text("Creditor Name"),
+                        subtitle: Text('Transaction Type'),
+                        trailing: Text("Amound")),
                   );
                   // },
                   // );
